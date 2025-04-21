@@ -4,15 +4,19 @@ namespace Calculator.Services;
 
 public class HistoryService : IHistoryService
 {
+
+
     public void ShowHistory(List<HistoryItem> history)  
     {
+        var displayService = new DisplayService();
+
         if (history.Count == 0)
         {
             Console.WriteLine("History is empty");
             return;
         }
 
-        DisplayService.PrintHistory(history);
+        displayService.PrintHistory(history);
     }
     public void ClearHistory(List<HistoryItem> history)
     {

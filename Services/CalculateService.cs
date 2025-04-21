@@ -2,10 +2,12 @@ using System.Data;
 
 namespace Calculator.Services;
 
-public static class CalculateService
+public class CalculateService : ICalculateService
 {
-    public static void Calculate(List<HistoryItem> history)
+    public void Calculate(List<HistoryItem> history)
     {
+        var historyService = new HistoryService();
+
         string expression = "";
         
         while (true)
@@ -40,7 +42,7 @@ public static class CalculateService
                 };
 
                 history.Add(historyItem);
-                HistoryService.SaveHistory(history);
+                historyService.SaveHistory(history);
                 Console.WriteLine($"{expression} = {result}");
                 break;
             }

@@ -1,12 +1,15 @@
 ﻿using Calculator.Services;
 
+var historyService = new HistoryService();
+var calculateService = new CalculateService();
+
 Console.WriteLine("Welcome to Calculator!");
 
 List<HistoryItem> history = [];
 
 string filePath = "history.json";
 
-HistoryService.LoadHistory(filePath, history);
+historyService.LoadHistory(filePath, history);
 
 while (true)
 {
@@ -21,13 +24,13 @@ while (true)
         Console.Clear();
 
     else if (input == "history") 
-        HistoryService.ShowHistory(history);
+        historyService.ShowHistory(history);
 
     else if (input == "clear")
-        HistoryService.ClearHistory(history);
+        historyService.ClearHistory(history);
     
     else if (input == "calculate")
-        CalculateService.Calculate(history);
+        calculateService.Calculate(history);
 
     else
         Console.WriteLine("This command is not available");
