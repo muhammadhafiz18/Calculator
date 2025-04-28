@@ -1,14 +1,32 @@
 [
   {
     "Id": 1,
-    "Expression": "8 + 2 * (1+1)",
-    "Result": 12,
-    "CreatedAt": "2025-04-21T18:39:46.071629+05:00"
+    "Expression": "5 + 2",
+    "Result": 7,
+    "CreatedAt": "2025-04-28T19:19:33.72782+05:00"
   },
   {
-    "Id": 2,
-    "Expression": "8 + 2",
-    "Result": 10,
-    "CreatedAt": "2025-04-21T18:47:43.729761+05:00"
+    "Id": 3,
+    "Expression": "3 / 1",
+    "Result": 3,
+    "CreatedAt": "2025-04-28T19:20:05.865742+05:00"
+  },
+  {
+    "Id": 4,
+    "Expression": "5 - 2",
+    "Result": 3,
+    "CreatedAt": "2025-04-28T19:33:47.62572+05:00"
+  },
+  {
+    "Id": 6,
+    "Expression": "4 / 2",
+    "Result": 2,
+    "CreatedAt": "2025-04-28T19:34:00.334188+05:00"
+  },
+  {
+    "Id": 7,
+    "Expression": "6 - 2",
+    "Result": 4,
+    "CreatedAt": "2025-04-28T19:40:17.83652+05:00"
   }
 ]

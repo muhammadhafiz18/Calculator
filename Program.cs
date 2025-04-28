@@ -11,6 +11,8 @@ string filePath = "history.json";
 
 historyService.LoadHistory(filePath, history);
 
+Console.WriteLine("program cs" + history.Count);
+
 while (true)
 {
     Console.WriteLine("availabe commands: calculate, history, clear, exit, cls");

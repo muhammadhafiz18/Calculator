@@ -1,87 +1,101 @@
 using System.Text.Json;
-
-namespace Calculator.Services;
+using Calculator.Interfaces;
 
 public class HistoryService : IHistoryService
 {
-
-
-    public void ShowHistory(List<HistoryItem> history)  
+    public void ClearHistory(List<HistoryItem> history)
     {
+
         var displayService = new DisplayService();
 
         if (history.Count == 0)
-        {
-            Console.WriteLine("History is empty");
-            return;
-        }
+            Console.WriteLine("nothing to clear");
 
-        displayService.PrintHistory(history);
+        else
+        {
+            while (true)
+            {
+                displayService.PrintHistory(history);
+
+                string input = displayService.ReadInput("'all' for full clearing / cancel / id for deleting single element");
+
+                if (input == "all")
+                {
+                    history.Clear();
+                    SaveHistory("history.json", history);
+
+                    Console.WriteLine("History has cleared");
+                    break;
+                }
+
+                else if (input == "cancel")
+                {
+                    Console.Clear();
+                    return;
+                }
+
+                else if(int.TryParse(input, out int id))
+                {
+                    if(id <= history.Count)
+                    {
+                        Console.WriteLine($"{history[id - 1]} has removed");
+                        history.RemoveAt(id - 1);
+                        SaveHistory("history.json", history);
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("invalid Id");
+                    }
+                }
+            
+
+            }
+        }
     }
-    public void ClearHistory(List<HistoryItem> history)
+
+    public void LoadHistory(string path, List<HistoryItem> history)
     {
-        if (history.Count == 0)
+        if (!File.Exists(path))
+            Console.WriteLine("not found: " + path);
+
+        else
         {
-            Console.WriteLine("Nothing to clear.");
-            return;
-        }
-        ShowHistory(history);
+            var json = File.ReadAllText(path);;
+            var loadedHistory = JsonSerializer.Deserialize<List<HistoryItem>>(json);
 
-        while (true)
-        {
-            Console.Write("Delete Index or 'all' or 'cancel' to go back: ");
-            string input = Console.ReadLine()?.ToLower()!;
+            if (loadedHistory != null)
+            {
+                history.AddRange(loadedHistory);
+                Console.WriteLine("load history: " + history.Count);
+            }
 
-            if (input == "all")
-            {
-                history.Clear();
-                SaveHistory(history);
-                Console.WriteLine("History cleared.");
-                break;
-            }
-            else if (input == "cancel")
-            {
-                Console.WriteLine("Cancelled.");
-                break;
-            }
-            else if (int.TryParse(input, out int index) && index > 0 && index <= history.Count)
-            {
-
-                history.RemoveAt(index - 1);
-                SaveHistory(history);
-                Console.WriteLine("Entry removed.");
-                break;
-            }
             else
-            {
-                Console.WriteLine("Invalid input.");
-            }
+                Console.WriteLine($"History {history.Count} is empty");
         }
     }
-    public void SaveHistory(List<HistoryItem> historyItems)
+
+    public void SaveHistory(string path, List<HistoryItem> history)
     {
         var options = new JsonSerializerOptions
         {
             WriteIndented = true,
             Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
         };
-        string jsonString = JsonSerializer.Serialize(historyItems, options);
-        File.WriteAllText("history.json", jsonString);
-    }
-    public void LoadHistory(string path, List<HistoryItem> historyItems)
-    {
-        if(File.Exists(path))
-        {
-            string jsonString = File.ReadAllText(path);
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-            };
-            var history = JsonSerializer.Deserialize<List<HistoryItem>>(jsonString, options);
 
-            if(history != null)
-                historyItems.AddRange(history);
-        }
+        string json = JsonSerializer.Serialize(history, options);
+
+        File.WriteAllText(path, json);
+    }
+
+    public void ShowHistory(List<HistoryItem> history)
+    {
+        var displayService = new DisplayService();
+
+        if (history.Count == 0)
+            Console.WriteLine("HIstory is empty");
+
+        else
+            displayService.PrintHistory(history);
     }
 }

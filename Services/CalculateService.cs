@@ -35,14 +35,14 @@ public class CalculateService : ICalculateService
 
                 var historyItem = new HistoryItem
                 {
-                    Id = history.Count + 1,
+                    Id = history.Last().Id + 1,
                     Expression = expression,
                     Result = result,
                     CreatedAt = DateTime.Now
                 };
 
                 history.Add(historyItem);
-                historyService.SaveHistory(history);
+                historyService.SaveHistory("history.json", history);
                 Console.WriteLine($"{expression} = {result}");
                 break;
             }
