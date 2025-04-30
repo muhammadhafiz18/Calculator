@@ -1,4 +1,7 @@
+using Calculator.Models;
+
 namespace Calculator.Interfaces;
+
 public interface IHistoryService
 {
     void ShowHistory(List<HistoryItem> history);

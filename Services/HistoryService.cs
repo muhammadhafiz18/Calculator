@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Calculator.Interfaces;
+using Calculator.Models;
 
 public class HistoryService : IHistoryService
 {
