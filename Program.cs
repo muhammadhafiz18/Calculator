@@ -1,4 +1,5 @@
-﻿using Calculator.Services;
+﻿using Calculator.Models;
+using Calculator.Services;
 
 var historyService = new HistoryService();
 var calculateService = new CalculateService();
@@ -10,8 +11,6 @@ List<HistoryItem> history = [];
 string filePath = "history.json";
 
 historyService.LoadHistory(filePath, history);
-
-Console.WriteLine("program cs" + history.Count);
 
 while (true)
 {
@@ -37,4 +36,5 @@ while (true)
     else
         Console.WriteLine("This command is not available");
 }
+
 Console.WriteLine("Good bye");

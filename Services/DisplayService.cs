@@ -1,3 +1,6 @@
+using Calculator.Interfaces;
+using Calculator.Models;
+
 public class DisplayService : IDisplayService
 {
     public void PrintHistory(List<HistoryItem> historyItems)

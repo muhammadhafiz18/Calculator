@@ -1,4 +1,6 @@
 using System.Data;
+using Calculator.Interfaces;
+using Calculator.Models;
 
 namespace Calculator.Services;
 
@@ -33,9 +35,16 @@ public class CalculateService : ICalculateService
 
                 double result = Convert.ToDouble(dataTable.Compute(expression, null));
 
+                int id = 1;
+
+                if(history.Count != 0)
+                {
+                    id = history.Last().Id + 1;
+                }
+
                 var historyItem = new HistoryItem
                 {
-                    Id = history.Last().Id + 1,
+                    Id = id,
                     Expression = expression,
                     Result = result,
                     CreatedAt = DateTime.Now
@@ -46,9 +55,9 @@ public class CalculateService : ICalculateService
                 Console.WriteLine($"{expression} = {result}");
                 break;
             }
-            catch  
+            catch(Exception ex)  
             { 
-                Console.WriteLine($"Error: couldn't compute this expression"); 
+                Console.WriteLine($"Error: couldn't compute this expression, error: {ex.Message}"); 
             }
         }
     }
